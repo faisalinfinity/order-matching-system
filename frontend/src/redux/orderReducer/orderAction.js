@@ -52,3 +52,17 @@ export const updateBuyer = (id, changes) => (dispatch) => {
     })
     .catch((err) => dispatch({ type: GET_SELLER_ERROR }));
 };
+
+export const postOrder=(formData)=>(dispatch)=>{
+    return axios.post(`${BASE_URL}/orders`,formData)
+    .then(()=>{
+        if(formData.type=="buyer"){
+            dispatch(getBuyers())
+        }else{
+            dispatch(getSellers())
+        }
+      
+       
+    })
+
+}
