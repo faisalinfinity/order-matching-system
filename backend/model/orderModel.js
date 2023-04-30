@@ -4,12 +4,12 @@ const orderSchema = mongoose.Schema({
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
   status: { type: String, required: true },
+  type:{ type: String, required: true }
 });
 
-const buyerModel = mongoose.model("buyer", orderSchema);
-const sellerModel = mongoose.model("seller", orderSchema);
+const orderModel = mongoose.model("order", orderSchema);
+
 
 module.exports = {
-  buyerModel,
-  sellerModel,
+  orderModel
 };
