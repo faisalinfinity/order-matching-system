@@ -11,27 +11,26 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBuyers } from "../redux/orderReducer/orderAction";
+import { getCompletedOrder } from "../redux/orderReducer/orderAction";
 
-const BuyersTable = () => {
+const CompletedOrder = () => {
   const dispatch = useDispatch();
-  const { buyer, isLoading } = useSelector((s) => s.orderReducer);
-  console.log(buyer)
+  const { completed, isLoading } = useSelector((s) => s.orderReducer);
 
   useEffect(() => {
-    dispatch(getBuyers());
+    dispatch(getCompletedOrder());
   }, []);
   return (
-    <TableContainer >
+    <TableContainer>
       <Table variant="striped" colorScheme="teal">
         <Thead>
           <Tr>
-            <Th>Buyer Quantity</Th>
-            <Th>Buyer Price</Th>
+            <Th>Quantity</Th>
+            <Th> Price</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {buyer?.map((el,i) => (
+          {completed?.map((el, i) => (
             <Tr key={i}>
               <Td>{el.quantity}</Td>
               <Td>{el.price}</Td>
@@ -43,4 +42,4 @@ const BuyersTable = () => {
   );
 };
 
-export default BuyersTable;
+export default CompletedOrder;

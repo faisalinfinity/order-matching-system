@@ -4,6 +4,9 @@ import {
   GET_BUYER,
   GET_BUYER_ERROR,
   GET_BUYER_SUCCESS,
+  GET_COMPLETED,
+  GET_COMPLETED_ERROR,
+  GET_COMPLETED_SUCCESS,
   GET_SELLER,
   GET_SELLER_ERROR,
   GET_SELLER_SUCCESS,
@@ -53,16 +56,37 @@ export const updateBuyer = (id, changes) => (dispatch) => {
     .catch((err) => dispatch({ type: GET_SELLER_ERROR }));
 };
 
-export const postOrder=(formData)=>(dispatch)=>{
-    return axios.post(`${BASE_URL}/orders`,formData)
-    .then(()=>{
-        if(formData.type=="buyer"){
-            dispatch(getBuyers())
-        }else{
-            dispatch(getSellers())
-        }
-      
-       
-    })
+export const postOrder = (formData) => (dispatch) => {
+  return axios.post(`${BASE_URL}/orders`, formData).then(() => {
+    if (formData.type == "buyer") {
+      dispatch(getBuyers());
+    } else {
+      dispatch(getSellers());
+    }
+  });
+};
 
-}
+export const getCompletedOrder = () => (dispatch) => {
+  dispatch({ type: GET_COMPLETED });
+  return axios
+    .get(`${BASE_URL}/orders/completed`)
+    .then((res) => {
+      dispatch({ type: GET_COMPLETED_SUCCESS, payload: res.data });
+    })
+    .catch((err) => dispatch({ type: GET_COMPLETED_ERROR }));
+};
+
+export const updateAll = (data) => (dispatch) => {
+  return axios.post(`${BASE_URL}/orders/updateall`, data).then(() => {
+    dispatch(getCompletedOrder()).then(() => {
+      return dispatch(getBuyers()).then(() => dispatch(getSellers()));
+    });
+    // dispatch(getBuyers())
+    // dispatch(getSellers())
+  });
+};
+export const postCompletedOrder = (formData) => (dispatch) => {
+  return axios.post(`${BASE_URL}/orders/completed`,formData).then(() => {
+    dispatch(getCompletedOrder());
+  });
+};
