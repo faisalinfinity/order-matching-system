@@ -23,7 +23,8 @@ const AddOrder = () => {
     if (formData.quantity != 0 && formData.price != 0 && formData.type != "") {
       let initialQty = formData.quantity;
       if (formData.type == "buyer") {
-        let updatedSeller = seller.map((el) => {
+        let sortedSeller = seller.sort((b, a) => a.price - b.price);
+        let updatedSeller = sortedSeller.map((el) => {
           if (el.price <= formData.price) {
             if (el.quantity >= initialQty) {
               let temp = initialQty;
@@ -87,7 +88,8 @@ const AddOrder = () => {
           }
         }
       } else {
-        let updatedBuyer = buyer.map((el) => {
+        let sortedBuyer = buyer.sort((a, b) => a.price - b.price);
+        let updatedBuyer = sortedBuyer.map((el) => {
           if (el.price >= formData.price) {
             if (el.quantity >= initialQty) {
               let temp = initialQty;

@@ -10,7 +10,7 @@ async function postOrders(req, res) {
   }
 }
 
-async function postCompletedOrders(req,res) {
+async function postCompletedOrders(req, res) {
   try {
     let data = new orderModel(req.body);
     await data.save();
@@ -86,22 +86,37 @@ async function deleteSellOrders(req, res) {
 async function updateAll(req, res) {
   const updatedData = req.body;
   try {
+    const removeOps = updatedData
+      .filter(({ quantity }) => quantity === 0)
+      .map(({ _id }) => ({
+        deleteOne: {
+          filter: { _id: _id },
+        },
+      }));
+
     const updateOps = updatedData.map(({ _id, quantity }) => ({
       updateOne: {
         filter: { _id: _id },
         update: {
           $set: { quantity: quantity },
-          $unset: quantity === 0 ? { type: "" } : {},
         },
       },
     }));
 
-    let updated = await orderModel.bulkWrite(updateOps);
+    let updated = await orderModel.bulkWrite([...updateOps, ...removeOps]);
     res.json(updated);
   } catch (error) {
     res.send(error.message);
   }
 }
+
+const getAllOrders = async (req, res) => {
+  try {
+    res.json(await orderModel.find());
+  } catch (error) {
+    res.send(error.message);
+  }
+};
 
 module.exports = {
   postOrders,
@@ -114,4 +129,5 @@ module.exports = {
   getCompletedOrder,
   updateAll,
   postCompletedOrders,
+  getAllOrders,
 };

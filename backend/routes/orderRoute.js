@@ -10,9 +10,10 @@ const {
   deleteSellOrders,
   updateAll,
   getCompletedOrder,
+  getAllOrders,
 } = require("../controller/orderController");
 const orderRoute = express.Router();
-
+orderRoute.get("/",getAllOrders)
 orderRoute.post("/", postOrders);
 orderRoute.post("/completed", postCompletedOrders);
 orderRoute.get("/completed", getCompletedOrder);

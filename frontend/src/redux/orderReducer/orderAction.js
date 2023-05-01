@@ -1,6 +1,9 @@
 import { BASE_URL } from "../../constants/constant";
 import axios from "axios";
 import {
+  GET_ALL_ORDER,
+  GET_ALL_ORDER_ERROR,
+  GET_ALL_ORDER_SUCCESS,
   GET_BUYER,
   GET_BUYER_ERROR,
   GET_BUYER_SUCCESS,
@@ -11,6 +14,18 @@ import {
   GET_SELLER_ERROR,
   GET_SELLER_SUCCESS,
 } from "./orderType";
+
+export const getAllOrders = () => (dispatch) => {
+  dispatch({ type: GET_ALL_ORDER });
+  return axios
+    .get(`${BASE_URL}/orders`)
+    .then((res) => {
+      dispatch({ type: GET_ALL_ORDER_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: GET_ALL_ORDER_ERROR });
+    });
+};
 
 export const getBuyers = () => (dispatch) => {
   dispatch({ type: GET_BUYER });
@@ -57,13 +72,7 @@ export const updateBuyer = (id, changes) => (dispatch) => {
 };
 
 export const postOrder = (formData) => (dispatch) => {
-  return axios.post(`${BASE_URL}/orders`, formData).then(() => {
-    if (formData.type == "buyer") {
-      dispatch(getBuyers());
-    } else {
-      dispatch(getSellers());
-    }
-  });
+  return axios.post(`${BASE_URL}/orders`, formData)
 };
 
 export const getCompletedOrder = () => (dispatch) => {
@@ -78,15 +87,9 @@ export const getCompletedOrder = () => (dispatch) => {
 
 export const updateAll = (data) => (dispatch) => {
   return axios.post(`${BASE_URL}/orders/updateall`, data).then(() => {
-    dispatch(getCompletedOrder()).then(() => {
-      return dispatch(getBuyers()).then(() => dispatch(getSellers()));
-    });
-    // dispatch(getBuyers())
-    // dispatch(getSellers())
+    dispatch(getAllOrders());
   });
 };
 export const postCompletedOrder = (formData) => (dispatch) => {
-  return axios.post(`${BASE_URL}/orders/completed`,formData).then(() => {
-    dispatch(getCompletedOrder());
-  });
+  return axios.post(`${BASE_URL}/orders/completed`, formData)
 };

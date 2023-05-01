@@ -1,4 +1,7 @@
 import {
+  GET_ALL_ORDER,
+  GET_ALL_ORDER_ERROR,
+  GET_ALL_ORDER_SUCCESS,
   GET_BUYER,
   GET_BUYER_ERROR,
   GET_BUYER_SUCCESS,
@@ -86,6 +89,30 @@ export const orderReducer = (state = initialState, action) => {
         isLoading: true,
         isError: false,
       };
+    }
+    case GET_ALL_ORDER_SUCCESS:{
+      return{
+        ...state,
+        buyer:payload.filter((el)=>el.type==="buyer"),
+        seller:payload.filter((el)=>el.type==="seller"),
+        completed:payload.filter((el)=>el.status==="completed"),
+        isLoading:false,
+        isError:false
+
+      }
+    }
+    case GET_ALL_ORDER:{
+      return{
+        ...state,
+        isLoading:true
+      }
+    }
+    case GET_ALL_ORDER_ERROR:{
+      return{
+        ...state,
+        isLoading:false,
+        isError:true
+      }
     }
     default: {
       return state;
