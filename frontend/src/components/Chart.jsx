@@ -69,21 +69,6 @@ const LineChart = () => {
 
       options: {
         responsive: true,
-        scales: {
-          xAxes: [
-            {
-              display: true,
-              ticks: {
-                reverse: true,
-              },
-            },
-          ],
-          yAxes: [
-            {
-              display: true,
-            },
-          ],
-        },
       },
     });
     //setting every chart instances

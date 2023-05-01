@@ -65,22 +65,22 @@ export const checkSeller = (
               status: "completed",
               type: "completed",
             })
-          );
+          ).then(() => {
+            //playing ticking sound on partial order complete
+            audio.play();
+
+            //alert
+            toast({
+              title: "Buy order partially executed",
+              status: "success",
+              duration: 2000,
+              isClosable: true,
+              position: "top",
+            });
+          });
         }
       })
       .then(() => {
-        //playing ticking sound on partial order complete
-        audio.play();
-
-        //alert
-        toast({
-          title: "Buy order partially executed",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top",
-        });
-
         //dispatching action to update the changes
         dispatch(updateAll(updatedSeller));
       });
@@ -183,21 +183,22 @@ export const checkBuyer = (
               status: "completed",
               type: "completed",
             })
-          );
+          ).then(() => {
+            //playing ticking sound on partial order complete
+            audio.play();
+            toast({
+              title: "Sell order partially executed",
+              status: "success",
+              duration: 2000,
+              isClosable: true,
+              position: "top",
+            });
+          });
         }
       })
       .then(() => {
         //dispatching action to update the changes
         dispatch(updateAll(updatedBuyer));
-        //playing ticking sound on partial order complete
-        audio.play();
-        toast({
-          title: "Sell order partially executed",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top",
-        });
       });
   } else {
     let temp = formData.quantity - initialQty;
