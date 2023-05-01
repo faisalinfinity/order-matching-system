@@ -2,6 +2,16 @@
  # Order Matching System
 This is an order matching system web application that allows users to place orders, view pending orders, and see completed orders with matched prices. The application also includes dynamic line charts that display the matching order price over time.
 
+# Tech Stack
+ 1.React 
+ 2.Redux
+ 3.MongoDb
+ 4.Express
+ 5.Mongoose
+ 6.Chart.js
+ 7.Chakra-UI
+ 8.Node.js
+
  # Getting Started
 
  # Deployed Link :https://order-matching-system-omega.vercel.app
