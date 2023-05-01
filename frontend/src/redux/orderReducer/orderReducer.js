@@ -18,6 +18,9 @@ const initialState = {
   seller: [],
   completed: [],
   isLoading: false,
+  sellerLoading:false,
+  buyerLoading:false,
+  completedLoading:false,
   isError: false,
 };
 
@@ -28,14 +31,14 @@ export const orderReducer = (state = initialState, action) => {
     case GET_BUYER: {
       return {
         ...state,
-        isLoading: true,
+        buyerLoading: true,
         isError: false,
       };
     }
     case GET_SELLER: {
       return {
         ...state,
-        isLoading: true,
+       sellerLoading: true,
         isError: false,
       };
     }
@@ -43,7 +46,7 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         seller: payload,
-        isLoading: false,
+        sellerLoading: false,
         isError: false,
       };
     }
@@ -51,28 +54,28 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         buyer: payload,
-        isLoading: false,
+        buyerLoading: false,
         isError: false,
       };
     }
     case GET_SELLER_ERROR: {
       return {
         ...state,
-        isLoading: false,
+        sellerLoading: false,
         isError: true,
       };
     }
     case GET_BUYER_ERROR: {
       return {
         ...state,
-        isLoading: false,
+        buyerLoading: false,
         isError: true,
       };
     }
     case GET_COMPLETED: {
       return {
         ...state,
-        isLoading: true,
+        completedLoading: true,
         isError: false,
       };
     }
@@ -80,14 +83,15 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         completed: payload,
+        completedLoading:false,
         isError: false,
       };
     }
     case GET_COMPLETED_ERROR: {
       return {
         ...state,
-        isLoading: true,
-        isError: false,
+        completedLoading:false,
+        isError: true,
       };
     }
     case GET_ALL_ORDER_SUCCESS:{

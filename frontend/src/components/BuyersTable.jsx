@@ -16,10 +16,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBuyers } from "../redux/orderReducer/orderAction";
 import { bs, bs_dark } from "../constants/constant";
+import Loader from "./Loader";
 
 const BuyersTable = () => {
   const dispatch = useDispatch();
-  const { buyer, isLoading } = useSelector((s) => s.orderReducer);
+  const { buyer, buyerLoading } = useSelector((s) => s.orderReducer);
   console.log(buyer);
   const { colorMode } = useColorMode();
   useEffect(() => {
@@ -39,7 +40,7 @@ const BuyersTable = () => {
       <Heading color={"green.500"}  textAlign={"center"} fontSize={"md"}>
         Pending Buy Orders
       </Heading>
-      <TableContainer>
+      {buyerLoading?<Loader/>: <TableContainer className="container" overflowY={"scroll"}>
         <Table variant="striped" colorScheme="green">
           <Thead>
             <Tr>
@@ -51,12 +52,13 @@ const BuyersTable = () => {
             {buyer?.reverse().map((el, i) => (
               <Tr key={i}>
                 <Td>{el.quantity}</Td>
-                <Td>{el.price}</Td>
+                <Td>₹ {el.price}</Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
-      </TableContainer>
+      </TableContainer>}
+     
     </Box>
   );
 };

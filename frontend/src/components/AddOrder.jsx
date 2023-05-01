@@ -82,10 +82,13 @@ const AddOrder = () => {
       <Button
         isLoading={isLoading}
         loadingText="Loading"
-        colorScheme="teal"
+        colorScheme="white"
         variant="outline"
         spinnerPlacement="end"
+        bgColor={"teal"}
+       color={"white"}
         onClick={handlePost}
+        borderRadius={"15px"}
       >
         Submit
       </Button>
