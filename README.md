@@ -45,8 +45,6 @@ Order Matching System: Take out all the possible cases in order matching system 
 
 
 
-<img src="https://res.cloudinary.com/dq674z2lp/image/upload/v1680457612/product-pc_wajkje.png"/>
-
 
 
 
@@ -61,7 +59,7 @@ Order Matching System: Take out all the possible cases in order matching system 
 
 
 
-# SingleProduct Page
+
 <table>
   <tr>
     <td valign="top"><img src="https://res.cloudinary.com/dq674z2lp/image/upload/v1682970518/mobile_11_cfx7fa.png"/></td>
@@ -70,7 +68,7 @@ Order Matching System: Take out all the possible cases in order matching system 
 </table>
 
 
-# Cart Page
+
 <table>
   <tr>
     <td valign="top"><img src="https://res.cloudinary.com/dq674z2lp/image/upload/v1682970518/mobile_12_wdaki4.png"/></td>
