@@ -1,4 +1,3 @@
-
 //this file contains all the constants
 //backend Url
 export const BASE_URL = "https://order-system-be.onrender.com";
