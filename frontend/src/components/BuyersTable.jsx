@@ -35,31 +35,38 @@ const BuyersTable = () => {
       boxShadow={colorMode === "dark" ? bs_dark : bs}
       mt="10px"
       gap={"10px"}
-     
     >
       {" "}
-      <Heading color={"green.500"}  textAlign={"center"} fontSize={"md"}>
+      <Heading color={"green.500"} textAlign={"center"} fontSize={"md"}>
         Pending Buy Orders
       </Heading>
-      {buyerLoading?<Loader/>: <TableContainer  maxHeight={"400px"} minHeight={"400px"} className="container" overflowY={"scroll"}>
-        <Table variant="striped" colorScheme="green">
-          <Thead>
-            <Tr>
-              <Th>Buyer Quantity</Th>
-              <Th>Buyer Price</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {buyer?.reverse().map((el, i) => (
-              <Tr key={i}>
-                <Td>{el.quantity}</Td>
-                <Td>₹ {el.price}</Td>
+      {buyerLoading ? (
+        <Loader />
+      ) : (
+        <TableContainer
+          maxHeight={"400px"}
+          minHeight={"400px"}
+          className="container"
+          overflowY={"scroll"}
+        >
+          <Table variant="striped" colorScheme="green">
+            <Thead>
+              <Tr>
+                <Th>Buyer Quantity</Th>
+                <Th>Buyer Price</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>}
-     
+            </Thead>
+            <Tbody>
+              {buyer?.reverse().map((el, i) => (
+                <Tr key={i}>
+                  <Td>{el.quantity}</Td>
+                  <Td>₹ {el.price}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      )}
     </Box>
   );
 };

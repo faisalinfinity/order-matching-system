@@ -42,8 +42,12 @@ const CompletedOrder = () => {
       {completedLoading ? (
         <Loader />
       ) : (
-        <TableContainer className="container" maxHeight={"400px"} overflowY={"scroll"}>
-          <Table variant="striped" colorScheme="teal">
+        <TableContainer
+          className="container"
+          maxHeight={"400px"}
+          overflowY={"scroll"}
+        >
+          <Table variant="striped" colorScheme="blue">
             <Thead>
               <Tr>
                 <Th>Quantity</Th>

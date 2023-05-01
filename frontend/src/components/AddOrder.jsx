@@ -1,5 +1,12 @@
-import { Box, Button, Input, Select, useColorMode } from "@chakra-ui/react";
-import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Select,
+  useColorMode,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { bs, bs_dark } from "../constants/constant";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,6 +15,8 @@ import {
   updateAll,
 } from "../redux/orderReducer/orderAction";
 import { checkBuyer, checkSeller } from "../scripts/scripts";
+import { useToast } from "@chakra-ui/react";
+const apple = require("../assets/apple.mp3");
 
 const AddOrder = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +29,11 @@ const AddOrder = () => {
   const { colorMode } = useColorMode();
 
   const dispatch = useDispatch();
-  const { buyer, seller, isLoading } = useSelector((s) => s.orderReducer);
+  const { buyer, seller, isLoading, completed } = useSelector(
+    (s) => s.orderReducer
+  );
+  const [audio] = useState(new Audio(apple));
+  const toast = useToast();
 
   const handlePost = () => {
     if (formData.quantity != 0 && formData.price != 0 && formData.type != "") {
@@ -33,7 +46,8 @@ const AddOrder = () => {
           initialQty,
           postOrder,
           postCompletedOrder,
-          updateAll
+          updateAll,
+          audio
         );
       } else {
         checkBuyer(
@@ -43,13 +57,21 @@ const AddOrder = () => {
           initialQty,
           postOrder,
           postCompletedOrder,
-          updateAll
+          updateAll,
+          audio
         );
       }
     } else {
-      alert("Fill all details first");
+      toast({
+        title: 'Fill all Details first',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position:"top"
+      })
     }
   };
+
   return (
     <Box
       borderRadius={"20px"}
@@ -62,6 +84,9 @@ const AddOrder = () => {
       flexDirection={"column"}
       gap={"10px"}
     >
+      <Heading fontSize={"18px"} color={"#ffa91b"} textAlign={"center"}>
+        Enter order details
+      </Heading>
       <Input
         onChange={(e) =>
           setFormData({ ...formData, quantity: +e.target.value })
@@ -86,7 +111,7 @@ const AddOrder = () => {
         variant="outline"
         spinnerPlacement="end"
         bgColor={"teal"}
-       color={"white"}
+        color={"white"}
         onClick={handlePost}
         borderRadius={"15px"}
       >

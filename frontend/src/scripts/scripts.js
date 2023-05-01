@@ -1,4 +1,4 @@
-export const checkSeller = (dispatch,seller,formData,initialQty,postOrder,postCompletedOrder,updateAll) => {
+export const checkSeller = (dispatch,seller,formData,initialQty,postOrder,postCompletedOrder,updateAll,audio) => {
     let sortedSeller = seller.sort((b, a) => a.price - b.price);
     let updatedSeller = sortedSeller.map((el) => {
       if (el.price <= formData.price) {
@@ -49,6 +49,7 @@ export const checkSeller = (dispatch,seller,formData,initialQty,postOrder,postCo
     } else {
       let temp = formData.quantity - initialQty;
       if (temp > 0) {
+        
         dispatch(
           postCompletedOrder({
             quantity: temp,
@@ -57,6 +58,7 @@ export const checkSeller = (dispatch,seller,formData,initialQty,postOrder,postCo
             type: "completed",
           })
         ).then(() => {
+            audio.play()
           dispatch(updateAll(updatedSeller));
         });
       } else {
@@ -65,7 +67,7 @@ export const checkSeller = (dispatch,seller,formData,initialQty,postOrder,postCo
     }
 };
 
-export const checkBuyer = (dispatch,buyer,formData,initialQty,postOrder,postCompletedOrder,updateAll) => {
+export const checkBuyer = (dispatch,buyer,formData,initialQty,postOrder,postCompletedOrder,updateAll,audio) => {
     let sortedBuyer = buyer.sort((a, b) => a.price - b.price);
         let updatedBuyer = sortedBuyer.map((el) => {
           if (el.price >= formData.price) {
@@ -100,6 +102,7 @@ export const checkBuyer = (dispatch,buyer,formData,initialQty,postOrder,postComp
             .then(() => {
               let temp = formData.quantity - initialQty;
               if (temp > 0) {
+             
                 dispatch(
                   postCompletedOrder({
                     quantity: temp,
@@ -112,6 +115,7 @@ export const checkBuyer = (dispatch,buyer,formData,initialQty,postOrder,postComp
             })
             .then(() => {
               dispatch(updateAll(updatedBuyer));
+              audio.play()
             });
         } else {
           let temp = formData.quantity - initialQty;
