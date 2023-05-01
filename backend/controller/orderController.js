@@ -116,8 +116,6 @@ module.exports = {
   postOrders,
   getSellOrders,
   getBuyOrders,
-  updateBuyOrders,
-  updateSellOrders,
   deleteBuyOrders,
   deleteSellOrders,
   getCompletedOrder,
