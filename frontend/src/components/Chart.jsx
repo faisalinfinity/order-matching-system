@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import { useSelector } from "react-redux";
 import {
@@ -13,28 +12,29 @@ import { AiOutlineStock } from "react-icons/ai";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { BiDoughnutChart } from "react-icons/bi";
 import { TiChartPieOutline } from "react-icons/ti";
-const options = {
-  scales: {
-    y: {
-      beginAtZero: true,
-    },
-  },
-};
 
+//Chart Component
 const LineChart = () => {
+  //Initializing canvas ref.
   const chartRef = useRef(null);
   const [chartType, setchartType] = useState("line");
+
+  //importing completed[] from redux store for dynamic chart
   const { completed } = useSelector((s) => s.orderReducer);
+  //Initializing chartInstance
   const [chartInstance, setChartInstance] = useState(null);
   const [chartWidth, setChartWidth] = useState("70%");
+
   useEffect(() => {
     const chart = chartRef.current;
 
     if (!chart) return;
 
+    //creating context for 2d canvas
     const context = chart.getContext("2d");
     if (!context) return;
 
+    //customizing chartData a/c to Chart.js  official Docs
     const chartData = {
       labels: Array.from(
         { length: completed?.length },
@@ -57,10 +57,12 @@ const LineChart = () => {
       ],
     };
 
+    //destroying or removing multiple Instances of canvas
     if (chartInstance) {
       chartInstance.destroy();
     }
 
+    //Creating new chart from Chart constructor class
     const Newchart = new Chart(context, {
       type: chartType,
       data: chartData,
@@ -84,7 +86,7 @@ const LineChart = () => {
         },
       },
     });
-
+    //setting every chart instances
     setChartInstance(Newchart);
   }, [completed, chartType]);
 
@@ -110,6 +112,7 @@ const LineChart = () => {
         <IconButton
           color={"#ffa91b"}
           onClick={() => {
+            //changing chart type when click event triggered
             setChartWidth("70%");
             setchartType("line");
           }}
@@ -119,6 +122,7 @@ const LineChart = () => {
         <IconButton
           color={"#027bff"}
           onClick={() => {
+
             setChartWidth("70%");
             setchartType("bar");
           }}
@@ -145,18 +149,19 @@ const LineChart = () => {
         ></IconButton>
       </Box>
       <Text textAlign={"center"}>Click to change chart style </Text>
+      {/* Stylying canvas */}
       <canvas
         style={{
           border: "20px solid #000",
           boxShadow: "0 0 20px rgba(0, 0, 0, 0.4)",
           padding: "20px",
           backgroundColor: useColorModeValue("white", "black"),
-          borderRadius:"25px"
+          borderRadius: "25px",
         }}
         ref={chartRef}
       />
       <Heading fontSize={"20px"} mb="50px" textAlign={"center"}>
-        Matching Order Chart
+       Dynamic Matching Order Chart
       </Heading>
     </Box>
   );

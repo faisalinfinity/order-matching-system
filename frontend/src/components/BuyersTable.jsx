@@ -17,8 +17,12 @@ import { getBuyers } from "../redux/orderReducer/orderAction";
 import { bs, bs_dark } from "../constants/constant";
 import Loader from "./Loader";
 
+//This component is the Table to show all buyer's order
 const BuyersTable = () => {
+  //useDispatch Hook for dispatching action for updating redux Store
   const dispatch = useDispatch();
+
+  //importing buyer[] data from redux Store
   const { buyer, buyerLoading } = useSelector((s) => s.orderReducer);
   const { colorMode } = useColorMode();
   useEffect(() => {
@@ -37,7 +41,7 @@ const BuyersTable = () => {
     >
       {" "}
       <Heading color={"green.500"} textAlign={"center"} fontSize={"md"}>
-        Pending Buy Orders
+        Pending Buy Orders -{buyer.length}
       </Heading>
       {buyerLoading ? (
         <Loader />
@@ -56,6 +60,7 @@ const BuyersTable = () => {
               </Tr>
             </Thead>
             <Tbody>
+              {/* mapping all buyer's order */}
               {buyer?.reverse().map((el, i) => (
                 <Tr key={i}>
                   <Td>{el.quantity}</Td>

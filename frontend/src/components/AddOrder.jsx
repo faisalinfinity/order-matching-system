@@ -19,7 +19,9 @@ import { checkBuyer, checkSeller } from "../scripts/scripts";
 import { useToast } from "@chakra-ui/react";
 const apple = require("../assets/apple.mp3");
 
+//Conponent for Adding order to the db
 const AddOrder = () => {
+  //Intializing the formData object
   const [formData, setFormData] = useState({
     quantity: 0,
     price: 0,
@@ -27,19 +29,28 @@ const AddOrder = () => {
     type: "",
   });
 
+  //Hook for conditional css based on dark/light mode
   const { colorMode } = useColorMode();
-
   const dispatch = useDispatch();
-  const { buyer, seller, isLoading, completed } = useSelector(
-    (s) => s.orderReducer
-  );
+
+  //importing buyer/seller from redux store
+  const { buyer, seller, isLoading } = useSelector((s) => s.orderReducer);
+
+  //initializing audio file
   const [audio] = useState(new Audio(apple));
+  //for alert message
   const toast = useToast();
 
+  //This fn is responsible for handle added formData
   const handlePost = () => {
     if (formData.quantity != 0 && formData.price != 0 && formData.type != "") {
+      //storing initial Qty in initialQty
       let initialQty = formData.quantity;
+
+      //checking if the added the is the buy order
       if (formData.type == "buyer") {
+        //checkSeller fn is responsible for checking matching order in existing seller data []
+        //passing all reqd parameters
         checkSeller(
           dispatch,
           seller,
@@ -48,9 +59,14 @@ const AddOrder = () => {
           postOrder,
           postCompletedOrder,
           updateAll,
-          audio
+          audio,
+          toast
         );
       } else {
+        // if the added the is the Sell order
+
+        //checkBuyer fn is responsible for checking matching order in existing buyer data []
+        //passing all reqd parameters
         checkBuyer(
           dispatch,
           buyer,
@@ -59,10 +75,12 @@ const AddOrder = () => {
           postOrder,
           postCompletedOrder,
           updateAll,
-          audio
+          audio,
+          toast
         );
       }
     } else {
+      //alert for empty formData
       toast({
         title: "Fill all Details first",
         status: "error",
@@ -75,8 +93,9 @@ const AddOrder = () => {
 
   return (
     <Box
+      //Inline Styling using Chakra-UI
       borderRadius={"20px"}
-      bg={useColorModeValue("#6c4d35","black")}
+      bg={useColorModeValue("#6c4d35", "black")}
       p="20px"
       w="350px"
       m="auto"

@@ -36,6 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+/* css for scroller */
 .container::-webkit-scrollbar {
   width: 10px;
 }

@@ -6,9 +6,11 @@ import AddOrder from "../components/AddOrder";
 import CompletedOrder from "../components/CompletedOrder";
 import LineChart from "../components/Chart";
 
+//Mainpage 
 const Homepage = () => {
   return (
     <Box>
+        {/* wrapping all components */}
       <AddOrder />
       <Box
         mt="50px"

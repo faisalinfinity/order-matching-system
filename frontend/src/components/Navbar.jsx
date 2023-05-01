@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
+//Navbar
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
 

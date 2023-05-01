@@ -1,3 +1,5 @@
+
+//different action types
 export const GET_SELLER="seller/get"
 export const GET_BUYER="buyer/get"
 export const GET_COMPLETED="completed/get"

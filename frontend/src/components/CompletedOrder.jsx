@@ -18,9 +18,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCompletedOrder } from "../redux/orderReducer/orderAction";
 import { bs, bs_dark } from "../constants/constant";
 import Loader from "./Loader";
-
+//This component is the Table to show all completed order
 const CompletedOrder = () => {
+
+    //useDispatch Hook for dispatching action for updating redux Store
   const dispatch = useDispatch();
+    //importing completed[] data from redux Store
   const { completed, completedLoading } = useSelector((s) => s.orderReducer);
   const { colorMode } = useColorMode();
 
@@ -36,10 +39,10 @@ const CompletedOrder = () => {
       mt="10px"
       gap={"10px"}
       minW="30%"
-      bg={useColorModeValue("white","black")}
+      bg={useColorModeValue("white", "black")}
     >
       <Heading color={"blue.500"} textAlign={"center"} fontSize={"md"}>
-        Completed Orders
+        Completed Orders - {completed.length}
       </Heading>
       {completedLoading ? (
         <Loader />
@@ -57,6 +60,7 @@ const CompletedOrder = () => {
               </Tr>
             </Thead>
             <Tbody>
+              {/* mapping all completed's order */}
               {completed?.reverse().map((el, i) => (
                 <Tr key={i}>
                   <Td>{el.quantity}</Td>
