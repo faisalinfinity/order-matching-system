@@ -10,12 +10,18 @@ const Homepage = () => {
   return (
     <Box>
       <AddOrder />
-      <Box mt="50px" mb="50px" display={"flex"} justifyContent={"space-around"}>
+      <Box
+        mt="50px"
+        mb="50px"
+        display={"flex"}
+        justifyContent={"space-around"}
+        flexDirection={{ base: "column", sm: "column", md: "row" }}
+      >
         <BuyersTable />
         <SellersTable />
         <CompletedOrder />
       </Box>
-      <LineChart/>
+      <LineChart />
     </Box>
   );
 };

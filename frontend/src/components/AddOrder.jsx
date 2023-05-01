@@ -5,6 +5,7 @@ import {
   Input,
   Select,
   useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { bs, bs_dark } from "../constants/constant";
@@ -63,20 +64,21 @@ const AddOrder = () => {
       }
     } else {
       toast({
-        title: 'Fill all Details first',
-        status: 'error',
+        title: "Fill all Details first",
+        status: "error",
         duration: 4000,
         isClosable: true,
-        position:"top"
-      })
+        position: "top",
+      });
     }
   };
 
   return (
     <Box
       borderRadius={"20px"}
+      bg={useColorModeValue("#6c4d35","black")}
       p="20px"
-      w="30%"
+      w="350px"
       m="auto"
       boxShadow={colorMode === "dark" ? bs_dark : bs}
       mt="10px"

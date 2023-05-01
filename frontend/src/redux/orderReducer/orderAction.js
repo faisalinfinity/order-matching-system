@@ -72,7 +72,7 @@ export const updateBuyer = (id, changes) => (dispatch) => {
 };
 
 export const postOrder = (formData) => (dispatch) => {
-  return axios.post(`${BASE_URL}/orders`, formData)
+  return axios.post(`${BASE_URL}/orders`, formData);
 };
 
 export const getCompletedOrder = () => (dispatch) => {
@@ -91,5 +91,5 @@ export const updateAll = (data) => (dispatch) => {
   });
 };
 export const postCompletedOrder = (formData) => (dispatch) => {
-  return axios.post(`${BASE_URL}/orders/completed`, formData)
+  return axios.post(`${BASE_URL}/orders/completed`, formData);
 };

@@ -2,7 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import { useSelector } from "react-redux";
-import { Box, Heading, IconButton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  IconButton,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { AiOutlineStock } from "react-icons/ai";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { BiDoughnutChart } from "react-icons/bi";
@@ -84,10 +90,11 @@ const LineChart = () => {
 
   return (
     <Box
+      bg={useColorModeValue("transparent", "transparent")}
       display={"flex"}
       flexDirection={"column"}
       gap="10px"
-      w={chartWidth}
+      w={{ base: "90%", sm: "90%", md: "80%", lg: chartWidth }}
       m="auto"
     >
       <Box
@@ -97,6 +104,8 @@ const LineChart = () => {
         justifyContent={"center"}
         alignItems={"center"}
         gap={"5px"}
+        p="20px"
+        bgColor="none"
       >
         <IconButton
           color={"#ffa91b"}
@@ -141,10 +150,14 @@ const LineChart = () => {
           border: "20px solid #000",
           boxShadow: "0 0 20px rgba(0, 0, 0, 0.4)",
           padding: "20px",
+          backgroundColor: useColorModeValue("white", "black"),
+          borderRadius:"25px"
         }}
         ref={chartRef}
       />
-      <Heading textAlign={"center"}>Matching Order Chart</Heading>
+      <Heading fontSize={"20px"} mb="50px" textAlign={"center"}>
+        Matching Order Chart
+      </Heading>
     </Box>
   );
 };

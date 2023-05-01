@@ -2,15 +2,14 @@ import {
   Box,
   Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
   useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +20,6 @@ import Loader from "./Loader";
 const BuyersTable = () => {
   const dispatch = useDispatch();
   const { buyer, buyerLoading } = useSelector((s) => s.orderReducer);
-  console.log(buyer);
   const { colorMode } = useColorMode();
   useEffect(() => {
     dispatch(getBuyers());
@@ -29,8 +27,9 @@ const BuyersTable = () => {
   return (
     <Box
       borderRadius={"20px"}
+      bg={useColorModeValue("whatsapp.100", "black")}
       p="20px"
-      w="30%"
+      minW="30%"
       m="auto"
       boxShadow={colorMode === "dark" ? bs_dark : bs}
       mt="10px"

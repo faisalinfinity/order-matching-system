@@ -11,6 +11,7 @@ import {
   Thead,
   Tr,
   useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,11 +31,12 @@ const CompletedOrder = () => {
     <Box
       borderRadius={"20px"}
       p="20px"
-      w="30%"
       m="auto"
       boxShadow={colorMode === "dark" ? bs_dark : bs}
       mt="10px"
       gap={"10px"}
+      minW="30%"
+      bg={useColorModeValue("white","black")}
     >
       <Heading color={"blue.500"} textAlign={"center"} fontSize={"md"}>
         Completed Orders
@@ -50,8 +52,8 @@ const CompletedOrder = () => {
           <Table variant="striped" colorScheme="blue">
             <Thead>
               <Tr>
-                <Th>Quantity</Th>
-                <Th> Price</Th>
+                <Th>Executed Quantity</Th>
+                <Th>At Price</Th>
               </Tr>
             </Thead>
             <Tbody>
