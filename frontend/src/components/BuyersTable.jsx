@@ -35,12 +35,13 @@ const BuyersTable = () => {
       boxShadow={colorMode === "dark" ? bs_dark : bs}
       mt="10px"
       gap={"10px"}
+     
     >
       {" "}
       <Heading color={"green.500"}  textAlign={"center"} fontSize={"md"}>
         Pending Buy Orders
       </Heading>
-      {buyerLoading?<Loader/>: <TableContainer className="container" overflowY={"scroll"}>
+      {buyerLoading?<Loader/>: <TableContainer  maxHeight={"400px"} minHeight={"400px"} className="container" overflowY={"scroll"}>
         <Table variant="striped" colorScheme="green">
           <Thead>
             <Tr>

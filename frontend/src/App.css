@@ -45,7 +45,7 @@
 }
 
 .container::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: #000;
   border-radius: 5px;
 }
 

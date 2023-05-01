@@ -38,7 +38,7 @@ const SellersTable = () => {
       <Heading color={"red.600"} textAlign={"center"} fontSize={"md"}>
         Pending Sell Orders
       </Heading>
-      {sellerLoading?<Loader />:<TableContainer className="container" overflowY={"scroll"}>
+      {sellerLoading?<Loader />:<TableContainer maxHeight={"400px"} minHeight={"400px"} className="container" overflowY={"scroll"}>
         <Table variant="striped" colorScheme="red">
           <Thead>
             <Tr>
