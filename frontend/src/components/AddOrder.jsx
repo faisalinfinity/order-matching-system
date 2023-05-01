@@ -1,12 +1,13 @@
-import { Box, Button, Input, Select } from "@chakra-ui/react";
+import { Box, Button, Input, Select, useColorMode } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { bs } from "../constants/constant";
+import { bs, bs_dark } from "../constants/constant";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postCompletedOrder,
   postOrder,
   updateAll,
 } from "../redux/orderReducer/orderAction";
+import { checkBuyer, checkSeller } from "../scripts/scripts";
 
 const AddOrder = () => {
   const [formData, setFormData] = useState({
@@ -16,143 +17,34 @@ const AddOrder = () => {
     type: "",
   });
 
+  const { colorMode } = useColorMode();
+
   const dispatch = useDispatch();
-  const { buyer, seller } = useSelector((s) => s.orderReducer);
+  const { buyer, seller, isLoading } = useSelector((s) => s.orderReducer);
 
   const handlePost = () => {
     if (formData.quantity != 0 && formData.price != 0 && formData.type != "") {
       let initialQty = formData.quantity;
       if (formData.type == "buyer") {
-        let sortedSeller = seller.sort((b, a) => a.price - b.price);
-        let updatedSeller = sortedSeller.map((el) => {
-          if (el.price <= formData.price) {
-            if (el.quantity >= initialQty) {
-              let temp = initialQty;
-              initialQty = 0;
-              return {
-                ...el,
-                quantity: el.quantity - temp,
-              };
-            } else {
-              initialQty = initialQty - el.quantity;
-              return {
-                ...el,
-                quantity: 0,
-              };
-            }
-          }
-
-          return el;
-        });
-
-        if (initialQty > 0) {
-          dispatch(
-            postOrder({
-              quantity: initialQty,
-              price: formData.price,
-              status: "pending",
-              type: formData.type,
-            })
-          )
-            .then(() => {
-              let temp = formData.quantity - initialQty;
-              if (temp > 0) {
-                dispatch(
-                  postCompletedOrder({
-                    quantity: temp,
-                    price: formData.price,
-                    status: "completed",
-                    type: "completed",
-                  })
-                );
-              }
-            })
-            .then(() => {
-              dispatch(updateAll(updatedSeller));
-            });
-        } else {
-          let temp = formData.quantity - initialQty;
-          if (temp > 0) {
-            dispatch(
-              postCompletedOrder({
-                quantity: temp,
-                price: formData.price,
-                status: "completed",
-                type: "completed",
-              })
-            ).then(() => {
-              dispatch(updateAll(updatedSeller));
-            });
-          } else {
-            dispatch(updateAll(updatedSeller));
-          }
-        }
+        checkSeller(
+          dispatch,
+          seller,
+          formData,
+          initialQty,
+          postOrder,
+          postCompletedOrder,
+          updateAll
+        );
       } else {
-        let sortedBuyer = buyer.sort((a, b) => a.price - b.price);
-        let updatedBuyer = sortedBuyer.map((el) => {
-          if (el.price >= formData.price) {
-            if (el.quantity >= initialQty) {
-              let temp = initialQty;
-              initialQty = 0;
-              return {
-                ...el,
-                quantity: el.quantity - temp,
-              };
-            } else {
-              initialQty = initialQty - el.quantity;
-              return {
-                ...el,
-                quantity: 0,
-              };
-            }
-          }
-
-          return el;
-        });
-
-        if (initialQty > 0) {
-          dispatch(
-            postOrder({
-              quantity: initialQty,
-              price: formData.price,
-              status: "pending",
-              type: formData.type,
-            })
-          )
-            .then(() => {
-              let temp = formData.quantity - initialQty;
-              if (temp > 0) {
-                dispatch(
-                  postCompletedOrder({
-                    quantity: temp,
-                    price: formData.price,
-                    status: "completed",
-                    type: "completed",
-                  })
-                );
-              }
-            })
-            .then(() => {
-              dispatch(updateAll(updatedBuyer));
-            });
-        } else {
-          let temp = formData.quantity - initialQty;
-
-          if (temp > 0) {
-            dispatch(
-              postCompletedOrder({
-                quantity: temp,
-                price: formData.price,
-                status: "completed",
-                type: "completed  ",
-              })
-            ).then(() => {
-              dispatch(updateAll(updatedBuyer));
-            });
-          } else {
-            dispatch(updateAll(updatedBuyer));
-          }
-        }
+        checkBuyer(
+          dispatch,
+          buyer,
+          formData,
+          initialQty,
+          postOrder,
+          postCompletedOrder,
+          updateAll
+        );
       }
     } else {
       alert("Fill all details first");
@@ -164,7 +56,7 @@ const AddOrder = () => {
       p="20px"
       w="30%"
       m="auto"
-      boxShadow={bs}
+      boxShadow={colorMode === "dark" ? bs_dark : bs}
       mt="10px"
       display={"flex"}
       flexDirection={"column"}
@@ -187,7 +79,16 @@ const AddOrder = () => {
         <option value="buyer">Buy</option>
         <option value="seller">Sell</option>
       </Select>
-      <Button onClick={handlePost}>Submit</Button>
+      <Button
+        isLoading={isLoading}
+        loadingText="Loading"
+        colorScheme="teal"
+        variant="outline"
+        spinnerPlacement="end"
+        onClick={handlePost}
+      >
+        Submit
+      </Button>
     </Box>
   );
 };

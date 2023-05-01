@@ -1,29 +1,44 @@
 import {
-    Table,
-    TableCaption,
-    TableContainer,
-    Tbody,
-    Td,
-    Tfoot,
-    Th,
-    Thead,
-    Tr,
-  } from "@chakra-ui/react";
-  import React, { useEffect } from "react";
-  import { useDispatch, useSelector } from "react-redux";
+  Box,
+  Heading,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Tfoot,
+  Th,
+  Thead,
+  Tr,
+  useColorMode,
+} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getSellers } from "../redux/orderReducer/orderAction";
-
+import { bs, bs_dark } from "../constants/constant";
 
 const SellersTable = () => {
-    const dispatch = useDispatch();
-    const { seller, isLoading } = useSelector((s) => s.orderReducer);
-  
-    useEffect(() => {
-      dispatch(getSellers());
-    }, []);
-    return (
-      <TableContainer >
-        <Table variant="striped" colorScheme="teal">
+  const dispatch = useDispatch();
+  const { seller, isLoading } = useSelector((s) => s.orderReducer);
+  const { colorMode } = useColorMode();
+  useEffect(() => {
+    dispatch(getSellers());
+  }, []);
+  return (
+    <Box
+      borderRadius={"20px"}
+      p="20px"
+      w="30%"
+      m="auto"
+      boxShadow={colorMode === "dark" ? bs_dark : bs}
+      mt="10px"
+    >
+      {" "}
+      <Heading color={"red.600"} textAlign={"center"} fontSize={"md"}>
+        Pending Sell Orders
+      </Heading>
+      <TableContainer>
+        <Table variant="striped" colorScheme="red">
           <Thead>
             <Tr>
               <Th>Seller Quantity</Th>
@@ -31,7 +46,7 @@ const SellersTable = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {seller?.map((el,i) => (
+            {seller?.reverse().map((el, i) => (
               <Tr key={i}>
                 <Td>{el.quantity}</Td>
                 <Td>{el.price}</Td>
@@ -40,7 +55,8 @@ const SellersTable = () => {
           </Tbody>
         </Table>
       </TableContainer>
-    );
-}
+    </Box>
+  );
+};
 
-export default SellersTable
+export default SellersTable;

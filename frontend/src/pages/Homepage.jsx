@@ -4,16 +4,18 @@ import SellersTable from "../components/SellersTable";
 import { Box } from "@chakra-ui/react";
 import AddOrder from "../components/AddOrder";
 import CompletedOrder from "../components/CompletedOrder";
+import LineChart from "../components/Chart";
 
 const Homepage = () => {
   return (
     <Box>
-        <AddOrder/>
-      <Box display={"flex"} justifyContent={"space-around"}>
+      <AddOrder />
+      <Box mt="50px" mb="50px" display={"flex"} justifyContent={"space-around"}>
         <BuyersTable />
         <SellersTable />
-        <CompletedOrder/>
+        <CompletedOrder />
       </Box>
+      <LineChart/>
     </Box>
   );
 };

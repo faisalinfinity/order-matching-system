@@ -1,4 +1,6 @@
 import {
+  Box,
+  Heading,
   Table,
   TableCaption,
   TableContainer,
@@ -8,38 +10,54 @@ import {
   Th,
   Thead,
   Tr,
+  useColorMode,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBuyers } from "../redux/orderReducer/orderAction";
+import { bs, bs_dark } from "../constants/constant";
 
 const BuyersTable = () => {
   const dispatch = useDispatch();
   const { buyer, isLoading } = useSelector((s) => s.orderReducer);
-  console.log(buyer)
-
+  console.log(buyer);
+  const { colorMode } = useColorMode();
   useEffect(() => {
     dispatch(getBuyers());
   }, []);
   return (
-    <TableContainer >
-      <Table variant="striped" colorScheme="teal">
-        <Thead>
-          <Tr>
-            <Th>Buyer Quantity</Th>
-            <Th>Buyer Price</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {buyer?.map((el,i) => (
-            <Tr key={i}>
-              <Td>{el.quantity}</Td>
-              <Td>{el.price}</Td>
+    <Box
+      borderRadius={"20px"}
+      p="20px"
+      w="30%"
+      m="auto"
+      boxShadow={colorMode === "dark" ? bs_dark : bs}
+      mt="10px"
+      gap={"10px"}
+    >
+      {" "}
+      <Heading color={"green.500"}  textAlign={"center"} fontSize={"md"}>
+        Pending Buy Orders
+      </Heading>
+      <TableContainer>
+        <Table variant="striped" colorScheme="green">
+          <Thead>
+            <Tr>
+              <Th>Buyer Quantity</Th>
+              <Th>Buyer Price</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </TableContainer>
+          </Thead>
+          <Tbody>
+            {buyer?.reverse().map((el, i) => (
+              <Tr key={i}>
+                <Td>{el.quantity}</Td>
+                <Td>{el.price}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 
