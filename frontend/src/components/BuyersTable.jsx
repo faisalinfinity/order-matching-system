@@ -25,6 +25,7 @@ const BuyersTable = () => {
   //importing buyer[] data from redux Store
   const { buyer, buyerLoading } = useSelector((s) => s.orderReducer);
   const { colorMode } = useColorMode();
+  console.log(buyer)
   useEffect(() => {
     dispatch(getBuyers());
   }, []);
